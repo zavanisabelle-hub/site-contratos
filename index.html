@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Planilha de Verificação dos Contratos</title>
+
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 15px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  th {
+    background: #e9ecef;
+    font-weight: bold;
+  }
+
+  td.nome {
+    text-align: left;
+    font-weight: bold;
+    color: #0066cc;
+    cursor: pointer;
+  }
+
+  td.nome:hover {
+    text-decoration: underline;
+  }
+
+  .true {
+    background: #d4edda;
+    color: #155724;
+    font-weight: bold;
+  }
+
+  .false {
+    background: #f8d7da;
+    color: #721c24;
+    font-weight: bold;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Planilha de Verificação dos Contratos</h1>
+
+<div class="table-container">
+  <table id="tabela">
+    <thead>
+      <tr>
+        <th>Aluno</th>
+        <th>Está no Conta Azul</th>
+        <th>Contrato Feito</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- linhas criadas pelo script -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const dados = [
+    { nome: "Agatha", contaAzul: true, contrato: true },
+    { nome: "Amara", contaAzul: true, contrato: true },
+    { nome: "Ana Leticia", contaAzul: true, contrato: true },
+    { nome: "Arthur Sodré", contaAzul: false, contrato: true },
+    { nome: "Ayla Rebeca", contaAzul: true, contrato: true },
+    { nome: "Bella", contaAzul: true, contrato: true },
+    { nome: "Benicio", contaAzul: true, contrato: true },
+    { nome: "Bernardo", contaAzul: false, contrato: true },
+    { nome: "Carlos", contaAzul: true, contrato: true },
+    { nome: "Cauã", contaAzul: true, contrato: true }
+  ];
+
+  function normalizarNome(nome) {
+    return nome
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "-");
+  }
+
+  const tbody = document.querySelector("#tabela tbody");
+
+  dados.forEach(aluno => {
+    const tr = document.createElement("tr");
+
+    const tdNome = document.createElement("td");
+    tdNome.className = "nome";
+    tdNome.textContent = aluno.nome;
+    tdNome.onclick = () => {
+      const arquivo = normalizarNome(aluno.nome) + ".pdf";
+      window.open("pdfs/" + arquivo, "_blank");
+    };
+
+    const tdConta = document.createElement("td");
+    tdConta.textContent = aluno.contaAzul ? "VERDADEIRO" : "FALSO";
+    tdConta.className = aluno.contaAzul ? "true" : "false";
+
+    const tdContrato = document.createElement("td");
+    tdContrato.textContent = aluno.contrato ? "VERDADEIRO" : "FALSO";
+    tdContrato.className = aluno.contrato ? "true" : "false";
+
+    tr.appendChild(tdNome);
+    tr.appendChild(tdConta);
+    tr.appendChild(tdContrato);
+    tbody.appendChild(tr);
+  });
+</script>
+
+</body>
+</html>

@@ -120,7 +120,7 @@
     tdNome.textContent = aluno.nome;
     tdNome.onclick = () => {
       const arquivo = normalizarNome(aluno.nome) + ".pdf";
-      window.open("pdfs/" + arquivo, "_blank");
+      window.open("./pdfs/" + arquivo, "_blank");
     };
 
     const tdConta = document.createElement("td");
